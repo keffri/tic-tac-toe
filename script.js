@@ -1,24 +1,35 @@
-const gameBoard = (() => {
+// let player = (() => {
+//   let playerName = prompt("Please enter your name.");
+//   if (playerName === null) {
+//     alert("Please enter a name.");
+//   }
+//   return { playerName };
+// })();
+
+const displayController = (() => {
   let gameBoard = document.querySelector(".ticTacToeBoard");
-  let board = [];
 
   let createBoard = (() => {
-    for (let i = 0; i < 9; i++) {
+    for (let i = 1; i <= 9; i++) {
       let boardBox = document.createElement("div");
       boardBox.classList.add("boardBox");
       gameBoard.appendChild(boardBox);
     }
   })();
 
-  return { board };
+  return { gameBoard };
 })();
 
-const displayController = (() => {})();
+const gameBoard = (() => {
+  let gameBoard = document.querySelector(".ticTacToeBoard");
+  let boardBoxes = document.querySelectorAll(".boardBox");
+  let board = ["", "", "", "", "", "", "", "", ""];
 
-let createPlayer = () => {
-  let name = prompt("Please enter a name.");
-  return { name };
-};
+  boardBoxes.forEach((box) => {
+    box.addEventListener("click", () => {
+      console.log("test");
+    });
+  });
 
-// let playerOne = createPlayer();
-// let playerTwo = createPlayer();
+  return { boardBoxes };
+})();
