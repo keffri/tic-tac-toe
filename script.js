@@ -25,7 +25,19 @@ const game = (() => {
     .addEventListener("click", handleClick);
   let resetButton = document
     .getElementById("resetGame")
-    .addEventListener("click", boardInit);
+    .addEventListener("click", () => {
+      board = ["", "", "", "", "", "", "", "", ""];
+      if (win === "X") {
+        turn = "O";
+        playersTurn = playerTwo;
+      } else if (win === "O") {
+        turn = "X";
+        playersTurn = playerOne;
+      }
+      turnText.textContent = `It's ${playersTurn.name}'s turn. (${turn})`;
+      ticTacToeBoard.classList.remove("cantClick");
+      createMark();
+    });
 
   const winningCombos = [
     [0, 1, 2],
