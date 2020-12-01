@@ -28,17 +28,6 @@ body {
   padding-bottom: 2em;
 }
 
-.controls {
-  width: 15em;
-  margin: auto;
-  text-align: center;
-  padding: 3em 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .btn {
   padding: 0.1em 0.5em;
   border: none;
@@ -85,4 +74,27 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 5em;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+#resetGame {
+  margin: 4em 0 0 0;
+  border: 0.1em solid #000;
+  background-color: #ccc;
+  padding: 0.25em 0.5em;
+  transition: all 0.4s;
+}
+
+#resetGame:hover {
+  background-color: #181818;
+  color: #ccc;
+  border: 0.1em solid #ccc;
+}
+
+.cantClick {
+  pointer-events: none;
 }

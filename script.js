@@ -1,16 +1,19 @@
-const createPlayer = () => {
-  playerName = prompt("Please enter a name.");
-  while (playerName === null || undefined) {
-    playerName = prompt("Please enter a name!");
+const game = (() => {
+  const createPlayer = () => {
+    playerName = prompt("Please enter a name.");
+    while (playerName === null || playerName === "") {
+      playerName = prompt("Please enter a name!");
+    }
+    name = playerName;
+    return { name };
+  };
+
+  function createPlayers() {
+    playerOne = createPlayer();
+    playerTwo = createPlayer();
   }
-  name = playerName;
-  return { name };
-};
 
-let playerOne = createPlayer();
-let playerTwo = createPlayer();
-
-const gameLogic = (() => {
+  let ticTacToeBoard = document.getElementById("ticTacToeBoard");
   let board;
   let boxes = Array.from(document.querySelectorAll(".boardBox"));
   let turn;
@@ -20,6 +23,9 @@ const gameLogic = (() => {
   document
     .getElementById("ticTacToeBoard")
     .addEventListener("click", handleClick);
+  let resetButton = document
+    .getElementById("resetGame")
+    .addEventListener("click", boardInit);
 
   const winningCombos = [
     [0, 1, 2],
@@ -37,6 +43,7 @@ const gameLogic = (() => {
     turn = "X";
     playersTurn = playerOne;
     turnText.textContent = `It's ${playersTurn.name}'s turn. (${turn})`;
+    ticTacToeBoard.classList.remove("cantClick");
     createMark();
   }
 
@@ -51,10 +58,24 @@ const gameLogic = (() => {
     if (clickedBox.textContent !== "") {
       return;
     }
+    let index = boxes.findIndex(function (box) {
+      return box === e.target;
+    });
     clickedBox.textContent = turn === "X" ? "X" : "O";
+    board[index] = clickedBox.textContent;
     switchTurn();
     let win = checkWinner();
-    turnText.textContent = `It's ${playersTurn.name}'s turn. (${turn}) `;
+    if (win === "X") {
+      turnText.textContent = `${playerOne.name} wins!`;
+      ticTacToeBoard.classList.add("cantClick");
+    } else if (win === "O") {
+      turnText.textContent = `${playerTwo.name} wins!`;
+      ticTacToeBoard.classList.add("cantClick");
+    } else if (win === "T") {
+      turnText.textContent = `Tie game.`;
+    } else {
+      turnText.textContent = `It's ${playersTurn.name}'s turn. (${turn}) `;
+    }
   }
 
   function switchTurn() {
@@ -65,9 +86,20 @@ const gameLogic = (() => {
   function checkWinner() {
     let winner = null;
 
+    winningCombos.forEach(function (combo) {
+      if (
+        board[combo[0]] &&
+        board[combo[0]] === board[combo[1]] &&
+        board[combo[0]] === board[combo[2]]
+      ) {
+        winner = board[combo[0]];
+      }
+    });
+
     return winner ? winner : board.includes("") ? null : "T";
   }
 
+  createPlayers();
   boardInit();
-  return { win };
+  return { board, win };
 })();
